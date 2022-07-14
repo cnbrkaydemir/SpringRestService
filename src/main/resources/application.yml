@@ -1,0 +1,15 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: e053c6410b0c2ddf9e4a
+            clientSecret: 89075f325500eef2ff832f67826f5b1fc142cd2d
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Commerce
+    username: postgres
+    password: password
+
