@@ -12,6 +12,7 @@ List<Users> findAllByUserName(String name);
 Users findByUserId(int id);
 Users findByUserEmail(String email);
 
+List<Users> findByUserName(String name);
 Users findByUserCity(String city);
 
 

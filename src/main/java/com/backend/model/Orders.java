@@ -27,7 +27,7 @@ public class Orders {
     private double orderPrice;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional=true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
 

@@ -6,11 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name="users")
-@JsonIgnoreProperties(value = {"orders"})
+@JsonIgnoreProperties(value = {"orders","authorities","userPassword","userId"})
 public class Users  {
     @Id
     @GenericGenerator(name = "native", strategy = "native")
@@ -45,9 +46,18 @@ public class Users  {
 
 
 
+    @Column(name="role")
+    @NotBlank
+    private String role;
+
     @OneToMany(mappedBy = "user",targetEntity = Orders.class,
             cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<Orders> orders;
+
+
+    @OneToMany(mappedBy="users",fetch=FetchType.EAGER)
+    private Set<Authority> authorities;
+
 
     public Users() {
     }
@@ -117,5 +127,21 @@ public class Users  {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 }

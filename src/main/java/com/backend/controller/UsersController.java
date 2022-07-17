@@ -4,13 +4,16 @@ import com.backend.exception.UsersNotFoundException;
 import com.backend.model.Orders;
 import com.backend.model.Users;
 import com.backend.service.UsersService;
+import io.netty.resolver.dns.UnixResolverDnsServerAddressStreamProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,12 +21,46 @@ public class UsersController {
 
    private final UsersService usersService;
 
+
    @Autowired
    public UsersController(UsersService usersService){
        this.usersService=usersService;
    }
 
-   @GetMapping("/api/users")
+
+    @GetMapping(path="myProfile")
+    public Users accountInformation(@RequestBody Users user){
+        Users u=usersService.findByUserId(user.getUserId());
+
+        if(u!=null){
+            return u;
+        }
+        else{
+            throw new UsersNotFoundException("Could not find user!");
+        }
+    }
+
+    @GetMapping(path="myOrders")
+    public List<Orders> myOrders(@RequestBody Users user){
+        return user.getOrders();
+    }
+
+    @PostMapping(path = "/signup")
+    public void signUp(@RequestBody Users user){
+        usersService.addUsers(user);
+        System.out.println("Successfully Registrated");
+    }
+
+    @PostMapping(path = "/newOrder")
+    public void newOrder(@RequestBody Users user,@RequestBody Orders order){
+       List<Orders> temp=new ArrayList<>();
+       temp.add(order);
+        user.setOrders(temp);
+        System.out.println("Successfully added new item!");
+    }
+
+
+   @GetMapping("/api/allUsers")
    public List<Users> retrieveAllUsers(){
        return usersService.findAll();
    }
@@ -64,6 +101,8 @@ public class UsersController {
         usersService.deleteUsers(id);
         System.out.println("Deleted the user with id:"+id);
     }
+
+
 
 
     }

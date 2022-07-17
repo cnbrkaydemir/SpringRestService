@@ -23,7 +23,8 @@ public class OrdersController {
     }
 
 
-    @GetMapping(path = "/api/orders")
+
+    @GetMapping(path = "/api/allOrders")
     public List<Orders> findAll(){
         return ordersService.findAll();
     }
@@ -37,12 +38,6 @@ public class OrdersController {
         }
 
         return order;
-    }
-
-    @GetMapping(path="/api/get-order-users/{orderId}")
-    public String getUserOfOrder(@PathVariable int orderId) {
-        Orders target=ordersService.findByOrdersId(orderId);
-        return target.getUser().getUserName();
     }
 
     @PostMapping(path="/api/add-order")
@@ -72,5 +67,8 @@ public class OrdersController {
         ordersService.deleteOrders(id);
         System.out.println("Deleted the order with id:"+id);
     }
+
+
+
 
 }
