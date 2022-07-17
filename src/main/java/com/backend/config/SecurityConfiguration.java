@@ -21,12 +21,10 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        /**
-         * Custom configurations as per our requirement
-         */
         http.authorizeHttpRequests((auth) -> auth
-                .antMatchers("/api", "/myProfile", "/myOrders", "/newOrder").authenticated()
-                .antMatchers("/home","/singup").permitAll()
+                .antMatchers("/api").hasAuthority("DELETE")
+                .antMatchers("/myProfile", "/myOrders", "/newOrder").hasAnyAuthority("READ")
+                .antMatchers("/home","/singup","/login").permitAll()
         ).formLogin().and().httpBasic(Customizer.withDefaults());
         return http.build();
 
