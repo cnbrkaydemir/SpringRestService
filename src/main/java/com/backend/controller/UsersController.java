@@ -45,18 +45,18 @@ public class UsersController {
         return user.getOrders();
     }
 
-    @PostMapping(path = "/signup")
-    public void signUp(@RequestBody Users user){
-        usersService.addUsers(user);
-        System.out.println("Successfully Registrated");
-    }
-
     @PostMapping(path = "/newOrder")
     public void newOrder(@RequestBody Users user,@RequestBody Orders order){
        List<Orders> temp=new ArrayList<>();
        temp.add(order);
         user.setOrders(temp);
         System.out.println("Successfully added new item!");
+    }
+
+    @PostMapping(path = "/signup")
+    public void signUp(@RequestBody Users user){
+        usersService.addUsers(user);
+        System.out.println("Successfully Registrated");
     }
 
 

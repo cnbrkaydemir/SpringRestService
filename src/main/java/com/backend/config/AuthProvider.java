@@ -34,10 +34,10 @@ public class AuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) {
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        List<Users> customer = usersRepository.findByUserName(username);
-        if (customer.size() > 0) {
-            if (passwordEncoder.matches(pwd, customer.get(0).getUserPassword())) {
-                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(customer.get(0).getAuthorities()));
+        List<Users> users = usersRepository.findByUserName(username);
+        if (users.size() > 0) {
+            if (passwordEncoder.matches(pwd, users.get(0).getUserPassword())) {
+                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(users.get(0).getAuthorities()));
             } else {
                 throw new BadCredentialsException("Invalid password!");
             }

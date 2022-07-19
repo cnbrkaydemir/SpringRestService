@@ -11,6 +11,9 @@ public class HomeController {
         return "hello.html";
     }
 
-
+    @GetMapping(value = "/user")
+    public String LoggedIn() {
+        return "Home.html";
+    }
 
 }

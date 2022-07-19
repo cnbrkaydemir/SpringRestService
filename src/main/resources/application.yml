@@ -6,3 +6,9 @@ spring:
     username: postgres
     password: password
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idp.example.com
+          jwk-set-uri: https://idp.example.com/.well-known/jwks.json

@@ -9,10 +9,10 @@ public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "authorities_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "authorities_name")
+    @Column(name = "name")
     @NotBlank
     private String name;
 
