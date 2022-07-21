@@ -40,6 +40,10 @@ public class UsersService {
         return user;
     }
 
+    public Users findByName(String name){
+        return usersRepository.findByUserName(name).get(0);
+    }
+
     public void deleteUsers(int id){
         String nameDeleted=usersRepository.findByUserId(id).getUserName();
         usersRepository.deleteById(id);

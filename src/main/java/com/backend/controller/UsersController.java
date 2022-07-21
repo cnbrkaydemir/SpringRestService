@@ -3,11 +3,13 @@ package com.backend.controller;
 import com.backend.exception.UsersNotFoundException;
 import com.backend.model.Orders;
 import com.backend.model.Users;
+import com.backend.service.OrdersService;
 import com.backend.service.UsersService;
 import io.netty.resolver.dns.UnixResolverDnsServerAddressStreamProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,14 +23,15 @@ public class UsersController {
 
    private final UsersService usersService;
 
-
+    private final OrdersService ordersService;
    @Autowired
-   public UsersController(UsersService usersService){
+   public UsersController(UsersService usersService,OrdersService ors){
        this.usersService=usersService;
+       this.ordersService=ors;
    }
 
 
-    @GetMapping(path="myProfile")
+    @PostMapping(path="myProfile")
     public Users accountInformation(@RequestBody Users user){
         Users u=usersService.findByUserId(user.getUserId());
 
@@ -36,21 +39,23 @@ public class UsersController {
             return u;
         }
         else{
-            throw new UsersNotFoundException("Could not find user!");
+            return null;
         }
     }
 
-    @GetMapping(path="myOrders")
-    public List<Orders> myOrders(@RequestBody Users user){
-        return user.getOrders();
+    @PostMapping("/myOrders")
+    public List<Orders> getOrderDetails(@RequestBody Users user) {
+        List<Orders> orders = user.getOrders();
+        if (orders != null ) {
+            return orders;
+        }else {
+            return null;
+        }
     }
 
     @PostMapping(path = "/newOrder")
-    public void newOrder(@RequestBody Users user,@RequestBody Orders order){
-       List<Orders> temp=new ArrayList<>();
-       temp.add(order);
-        user.setOrders(temp);
-        System.out.println("Successfully added new item!");
+    public void newOrder(@RequestBody Users users){
+
     }
 
     @PostMapping(path = "/signup")

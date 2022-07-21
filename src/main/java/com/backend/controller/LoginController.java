@@ -18,8 +18,10 @@ public class LoginController {
     @RequestMapping("/user")
     public Users getUserDetailsAfterLogin(Principal user) {
         List<Users> customers = usersRepository.findByUserName(user.getName());
+
         if (customers.size() > 0) {
             return customers.get(0);
+
         }else {
             return null;
         }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
-@JsonIgnoreProperties(value = {"orders","authorities","userPassword","userId"})
+@JsonIgnoreProperties(value = {"authorities","userPassword","userId"})
 public class Users  {
     @Id
     @GenericGenerator(name = "native", strategy = "native")

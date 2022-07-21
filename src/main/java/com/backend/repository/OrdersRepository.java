@@ -1,6 +1,7 @@
 package com.backend.repository;
 
 import com.backend.model.Orders;
+import com.backend.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public interface OrdersRepository extends JpaRepository<Orders,Integer> {
 
     List<Orders> findAllByOrderItem(String item);
+
+    List<Orders> findByUser(Users user);
 
     Orders findByOrderId(int id);
 

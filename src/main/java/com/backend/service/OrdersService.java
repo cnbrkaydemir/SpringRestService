@@ -38,6 +38,10 @@ public class OrdersService {
         return ordersRepository.findAll();
     }
 
+    public List<Orders> findByUser(Users user){
+        return ordersRepository.findByUser(user);
+    }
+
 
     public Orders addOrders(Orders orders){
         Orders temp=ordersRepository.save(orders);

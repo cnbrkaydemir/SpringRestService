@@ -57,9 +57,9 @@ public class SecurityConfiguration {
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((auth) -> auth
                         .antMatchers("/api/**").hasRole("ADMIN")
-                        .antMatchers("/myProfile", "/myOrders", "/newOrder").hasAnyRole("ADMIN,USER")
-                        .antMatchers("/home","/singup","/login").permitAll()
-                        .antMatchers("/user").authenticated())
+                        .antMatchers("/myProfile", "/myOrders", "/newOrder").hasAnyRole("ADMIN","USER")
+                        .antMatchers("/singup").permitAll()
+                        .antMatchers("/home","/user").authenticated())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
 
